@@ -11,6 +11,12 @@ import (
 )
 
 func GetSystemMetrics() (*dtos.ServerMetrics, error) {
+	loc, err := time.LoadLocation("Asia/Jakarta")
+	if err != nil {
+		return nil, fmt.Errorf("gagal memuat timezone: %v", err)
+	}
+
+	now := time.Now().In(loc)
 	// ambil data cpu
 	cpuPercentages, err := cpu.Percent(time.Second, false)
 	if err != nil {
@@ -34,7 +40,7 @@ func GetSystemMetrics() (*dtos.ServerMetrics, error) {
 	}
 
 	metrics := &dtos.ServerMetrics{
-		Timestamp:    time.Now().Format(time.RFC3339),
+		Timestamp:    now.Format(time.RFC3339),
 		CPUUsagePct:  cpuUsage,
 		RAMTotalMB:   vMem.Total / 1024 / 1024,
 		RAMUsedMB:    vMem.Used / 1024 / 1024,
