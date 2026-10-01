@@ -9,4 +9,5 @@ type ServerMetrics struct {
 	DiskTotalGB  uint64  `json:"disk_total_gb"`
 	DiskUsedGB   uint64  `json:"disk_used_gb"`
 	DiskUsagePct float64 `json:"disk_usage_pct"`
+	Key          string  `json:"key"`
 }
